@@ -1,4 +1,5 @@
 export interface battleRoyale {
+  id?: string;
   season: string;
   games: number;
   wins: number;

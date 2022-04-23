@@ -1,4 +1,5 @@
 import express from 'express';
+import { battleRoyale } from '../types';
 
 const router = express.Router();
 

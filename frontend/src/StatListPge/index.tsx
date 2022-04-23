@@ -28,7 +28,7 @@ const StatListPage = () => {
   const submitNewEntry = async (values: EntryFormValues) => {
     try {
       const { data: newEntry } = await axios.post<Entry>(
-        `${apiBaseUrl}/patients`,
+        `${apiBaseUrl}/br`,
         values
       );
       dispatch({ type: "ADD_ENTRY", payload: newEntry });

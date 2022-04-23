@@ -23,7 +23,7 @@ mongoose.connect(`${process.env.MONGODB_URL}`)
 const PORT = 3001;
 
 app.use('/api/arenas', arenasRouter);
-app.use('/api/battleRoyale', battleRoyaleRouter);
+app.use('/api/br', battleRoyaleRouter);
 app.use(express.static('build'));
 
 app.listen(PORT, () => {

@@ -24,7 +24,6 @@ export const reducer = (state: State, action: Action): State => {
           ...state.entries
         }
       };
-      /*
     case "ADD_ENTRY":
       return {
         ...state,
@@ -33,7 +32,7 @@ export const reducer = (state: State, action: Action): State => {
           [action.payload.id]: action.payload
         }
       };
-      */
+      
     default:
       return state;
   }

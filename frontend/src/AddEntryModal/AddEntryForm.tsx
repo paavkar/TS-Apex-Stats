@@ -2,7 +2,7 @@ import React from "react";
 import { Grid, Button } from "@mui/material";
 import { Field, Formik, Form } from "formik";
 
-import { TextField } from "./FormField";
+import { TextField, NumberField } from "./FormField";
 import { Entry } from "../types";
 
 /*
@@ -65,31 +65,31 @@ export const AddEntryForm = ({ onSubmit, onCancel }: Props) => {
               label="Games Played"
               placeholder="games"
               name="games"
-              component={TextField}
+              component={NumberField}
             />
             <Field
               label="Total wins in the season"
               placeholder="wins"
               name="wins"
-              component={TextField}
+              component={NumberField}
             />
             <Field
               label="Total Kills in the season"
               placeholder="kills"
               name="kills"
-              component={TextField}
+              component={NumberField}
             />
             <Field
               label="Kill/Death ratio in the season"
               placeholder="kdr"
               name="kdr"
-              component={TextField}
+              component={NumberField}
             />
             <Field
               label="Average damage in the season"
               placeholder="damage"
               name="avgDamage"
-              component={TextField}
+              component={NumberField}
             />
             <Grid>
               <Grid item>
