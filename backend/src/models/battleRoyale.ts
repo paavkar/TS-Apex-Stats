@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { battleRoyale } from '../types';
 
-const battleRoyaleSchema = new mongoose.Schema<battleRoyale>({
+const battleRoyaleSchema: mongoose.Schema = new mongoose.Schema<battleRoyale>({
   season: { type: String, required: true },
   games: { type: Number, required: true },
   wins: { type: Number, required: true },
@@ -10,4 +10,6 @@ const battleRoyaleSchema = new mongoose.Schema<battleRoyale>({
   avgDamage: { type: Number, required: true },
 });
 
-module.exports = mongoose.model<battleRoyale>('BattleRoyale', battleRoyaleSchema);
+const BattleRoyale = mongoose.model<battleRoyale>('BattleRoyale', battleRoyaleSchema);
+
+export default BattleRoyale;

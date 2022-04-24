@@ -5,8 +5,28 @@ import { Button, Divider, Container, Typography } from "@mui/material";
 import StatListPage from "./StatListPge";
 import SignIn from './SignInPage/SignIn';
 import SignUp from './SignUpPage/SignUp';
+import { apiBaseUrl } from "./constants";
+import { useStateValue } from "./state";
+import { Entry } from "./types";
 
 function App() {
+  const [, dispatch] = useStateValue();
+  React.useEffect(() => {
+    void axios.get<void>(`${apiBaseUrl}/ping`);
+
+    const fetchEntryList = async () => {
+      try {
+        const { data: entryListFromApi } = await axios.get<Entry[]>(
+          `${apiBaseUrl}/br`
+        );
+        dispatch({ type: "SET_ENTRY_LIST", payload: entryListFromApi });
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    void fetchEntryList();
+  }, [dispatch]);
+
   return (
     <div className="App">
       

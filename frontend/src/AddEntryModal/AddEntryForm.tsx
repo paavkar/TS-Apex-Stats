@@ -65,31 +65,31 @@ export const AddEntryForm = ({ onSubmit, onCancel }: Props) => {
               label="Games Played"
               placeholder="games"
               name="games"
-              component={NumberField}
+              component={TextField}
             />
             <Field
               label="Total wins in the season"
               placeholder="wins"
               name="wins"
-              component={NumberField}
+              component={TextField}
             />
             <Field
               label="Total Kills in the season"
               placeholder="kills"
               name="kills"
-              component={NumberField}
+              component={TextField}
             />
             <Field
               label="Kill/Death ratio in the season"
               placeholder="kdr"
               name="kdr"
-              component={NumberField}
+              component={TextField}
             />
             <Field
               label="Average damage in the season"
               placeholder="damage"
               name="avgDamage"
-              component={NumberField}
+              component={TextField}
             />
             <Grid>
               <Grid item>
