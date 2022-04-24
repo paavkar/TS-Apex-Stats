@@ -9,7 +9,7 @@ import SignUp from './SignUpPage/SignUp';
 function App() {
   return (
     <div className="App">
-      <SignIn></SignIn>
+      
       <Router>
         <Container>
           <Typography variant="h3" style={{ marginBottom: "0.5em" }}>
@@ -18,12 +18,17 @@ function App() {
           <Button component={Link} to="/" variant="contained" color="primary">
             Home
           </Button>
+          <Button component={Link} to="/login" variant="contained" color="primary" style={{ marginLeft: "0.5em" }}>
+            Sign in
+          </Button>
+          <Button component={Link} to="/register" variant="contained" color="primary" style={{ marginLeft: "0.5em" }}>
+            Sign up
+          </Button>
           <Divider hidden />
           <Routes>
             <Route path="/" element={<StatListPage />} />
-          </Routes>
-          <Routes>
-            <Route path="/login" element={<StatListPage />} />
+            <Route path="/login" element={<SignIn />} />
+            <Route path="/register" element={<SignUp />} />
           </Routes>
         </Container>
       </Router>
