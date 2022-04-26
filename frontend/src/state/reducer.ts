@@ -6,10 +6,10 @@ export type Action =
       type: "SET_ENTRY_LIST";
       payload: Entry[];
     }
-    | {
-        type: "ADD_ENTRY";
-        payload: Entry;
-      };
+  | {
+      type: "ADD_ENTRY";
+      payload: Entry;
+    };
 
 export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
@@ -32,7 +32,6 @@ export const reducer = (state: State, action: Action): State => {
           [action.payload.id]: action.payload
         }
       };
-      
     default:
       return state;
   }

@@ -3,9 +3,6 @@ import 'winston-mongodb';
 import "dotenv/config";
 
 
-/*
-Suositeltu tapa käyttää Winstonia, pohja otettu dokumentaatiosta
-*/
 const logger = winston.createLogger({
   level: 'info',
   format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
@@ -17,10 +14,10 @@ const logger = winston.createLogger({
     //
     new winston.transports.File({ filename: 'error.log', level: 'error' }),
     new winston.transports.File({ filename: 'combined.log' }),
-    new winston.transports.MongoDB({ db: `${process.env.MONGODB_URL}`, level: 'error', options: {
+    new winston.transports.MongoDB({ db: `${process.env.MONGODB_URI}`, level: 'error', options: {
       useUnifiedTopology: true,
     } }),
-    new winston.transports.MongoDB({ db: `${process.env.MONGODB_URL}`, options: {
+    new winston.transports.MongoDB({ db: `${process.env.MONGODB_URI}`, options: {
       useUnifiedTopology: true,
     } }),
   ],

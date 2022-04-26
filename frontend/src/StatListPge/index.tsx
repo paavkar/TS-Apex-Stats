@@ -21,6 +21,8 @@ const StatListPage = () => {
   const openModal = (): void => setModalOpen(true);
 
   const closeModal = (): void => {
+    
+    console.log(entries);
     setModalOpen(false);
     setError(undefined);
   };

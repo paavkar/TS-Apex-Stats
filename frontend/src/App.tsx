@@ -19,6 +19,7 @@ function App() {
         const { data: entryListFromApi } = await axios.get<Entry[]>(
           `${apiBaseUrl}/br`
         );
+        console.log(entryListFromApi);
         dispatch({ type: "SET_ENTRY_LIST", payload: entryListFromApi });
       } catch (e) {
         console.error(e);
