@@ -7,3 +7,10 @@ export interface Entry {
   kdr: number;
   avgDamage: number;
 }
+
+export interface User {
+  id: string;
+  username: string;
+  password: string;
+  token: string;
+}

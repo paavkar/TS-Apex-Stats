@@ -21,8 +21,6 @@ const StatListPage = () => {
   const openModal = (): void => setModalOpen(true);
 
   const closeModal = (): void => {
-    
-    console.log(entries);
     setModalOpen(false);
     setError(undefined);
   };
@@ -77,7 +75,6 @@ const StatListPage = () => {
           ))}
         </TableBody>
       </Table>
-      
       <AddEntryModal
         modalOpen={modalOpen}
         onSubmit={submitNewEntry}
@@ -87,7 +84,6 @@ const StatListPage = () => {
       <Button variant="contained" onClick={() => openModal()}>
         Add New Entry
       </Button>
-
     </div>
   );
 };

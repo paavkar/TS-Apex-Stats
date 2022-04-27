@@ -9,3 +9,9 @@ export interface battleRoyale extends Document {
   kdr: number;
   avgDamage: number;
 }
+
+export interface IUser extends Document {
+  id?: string;
+  username: string;
+  passwordHash: string;
+}

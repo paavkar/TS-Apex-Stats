@@ -1,5 +1,6 @@
 import { State } from "./state";
 import { Entry } from "../types";
+import { User } from "../types";
 
 export type Action =
   | {
@@ -9,6 +10,14 @@ export type Action =
   | {
       type: "ADD_ENTRY";
       payload: Entry;
+    }
+  | {
+      type: "SET_USER";
+      payload: User;
+    }
+    | {
+      type: "GET_USER";
+      payload: User;
     };
 
 export const reducer = (state: State, action: Action): State => {
@@ -31,6 +40,21 @@ export const reducer = (state: State, action: Action): State => {
           ...state.entries,
           [action.payload.id]: action.payload
         }
+      };
+    case "SET_USER":
+      return {
+        ...state,
+        user: {
+          id: action.payload.id,
+          username: action.payload.username,
+          password: action.payload.password,
+          token: action.payload.token
+        }
+      };
+    case "GET_USER":
+      return {
+        ...state,
+        ...state.user
       };
     default:
       return state;

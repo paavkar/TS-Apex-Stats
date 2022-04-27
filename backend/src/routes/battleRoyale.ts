@@ -14,7 +14,7 @@ router.get('/', async (_req: Request, res: Response) => {
     res.send(brEntries);
   }*/
   //res.send('Something');
-  const brEntries = await BattleRoyale.find();
+  const brEntries = await BattleRoyale.find({});
   res.status(200).send(brEntries);
 });
 

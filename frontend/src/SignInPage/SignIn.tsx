@@ -14,6 +14,9 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import SignUp from '../SignUpPage/SignUp';
+import { apiBaseUrl } from '../constants';
+import { useStateValue } from '../state/state';
+import { User } from "../types";
 
 function Copyright(props: any) {
   return (
@@ -31,13 +34,34 @@ function Copyright(props: any) {
 const theme = createTheme();
 
 export default function SignIn() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const [, dispatch] = useStateValue();
+
+  let token = null
+
+const setToken = (newToken: string) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    token = `bearer ${newToken}`
+ 
+};
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    try {
+      const { data: user } = await axios.post<User>(`${apiBaseUrl}/login`, { username: data.get('username'), password: data.get('password') });
+      dispatch({ type: "SET_USER", payload: user});
+      setToken(user.token);
+      window.localStorage.setItem(
+        'loggedUser', JSON.stringify(user)
+      )
+    } catch (e) {
+      console.error(e);
+    }
     console.log({
-      email: data.get('email'),
+      username: data.get('username'),
       password: data.get('password'),
     });
+    window.location.reload();
   };
 
   return (
@@ -63,10 +87,10 @@ export default function SignIn() {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="username"
+              label="Username"
+              name="username"
+              autoComplete="username"
               autoFocus
             />
             <TextField
