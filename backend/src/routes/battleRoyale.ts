@@ -25,8 +25,8 @@ router.post('/', (req: Request, res: Response) => {
     if (err) {
       res.send(err);
     } else {
-        res.send(brEntry);
-        logger.info(`added new BR entry: ${brEntry}`);
+      logger.info(`added new BR entry: ${brEntry}`);
+      res.send(brEntry);
     }
   });
   /*

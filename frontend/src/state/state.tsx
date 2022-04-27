@@ -6,11 +6,13 @@ import { Action } from "./reducer";
 export type State = {
   entries: { [id: string]: Entry };
   user: { id: string, username: string, password: string, token: string };
+  newUser: { username: string, password: string }
 };
 
 const initialState: State = {
   entries: {},
-  user: { id: "", username: "", password: "", token:"" }
+  user: { id: "", username: "", password: "", token: "" },
+  newUser: { username: "", password: "" }
 };
 
 export const StateContext = createContext<[State, React.Dispatch<Action>]>([

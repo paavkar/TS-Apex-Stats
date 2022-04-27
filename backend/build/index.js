@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const arenas_1 = __importDefault(require("./routes/arenas"));
 const battleRoyale_1 = __importDefault(require("./routes/battleRoyale"));
+const login_1 = __importDefault(require("./routes/login"));
+const users_1 = __importDefault(require("./routes/users"));
 const app = (0, express_1.default)();
 const cors_1 = __importDefault(require("cors"));
 const mongoose_1 = __importDefault(require("mongoose"));
@@ -24,8 +26,13 @@ mongoose_1.default.connect(`${process.env.MONGODB_URI}`)
     logger_1.default.error('error connection to MongoDB:', error.message);
 });
 const PORT = process.env.PORT;
+app.get('/api/ping', (_req, res) => {
+    res.send('pinging works');
+});
 app.use('/api/arenas', arenas_1.default);
 app.use('/api/br', battleRoyale_1.default);
+app.use('/api/login', login_1.default);
+app.use('/api/users', users_1.default);
 app.listen(PORT, () => {
     logger_1.default.info(`Server running on port ${PORT}`);
 });

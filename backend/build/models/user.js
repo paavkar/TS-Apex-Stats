@@ -6,20 +6,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 const mongoose_1 = __importDefault(require("mongoose"));
-const battleRoyaleSchema = new mongoose_1.default.Schema({
-    season: { type: String, required: true },
-    games: { type: Number, required: true },
-    wins: { type: Number, required: true },
-    kills: { type: Number, required: true },
-    kdr: { type: Number, required: true },
-    avgDamage: { type: Number, required: true },
+const userSchema = new mongoose_1.default.Schema({
+    username: { type: String, required: true },
+    passwordHash: { type: String, required: true }
 });
-battleRoyaleSchema.set('toJSON', {
+userSchema.set('toJSON', {
     transform: (_document, returnedObject) => {
         returnedObject.id = returnedObject._id.toString();
         delete returnedObject._id;
         delete returnedObject._v;
+        delete returnedObject.passwordHash;
     }
 });
-const BattleRoyale = mongoose_1.default.model('BattleRoyale', battleRoyaleSchema);
-exports.default = BattleRoyale;
+const User = mongoose_1.default.model('User', userSchema);
+exports.default = User;

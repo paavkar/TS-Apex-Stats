@@ -37,6 +37,8 @@ router.post('/', async (req: Request, res: Response) => {
     String(process.env.SECRET),
     //{ expiresIn: 60*60 }
   );
+  
+  logger.info(`user: ${username} logged in`);
   res
     .status(200)
     .send({ token, username: user.username });
