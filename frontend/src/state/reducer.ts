@@ -16,10 +16,6 @@ export type Action =
       payload: User;
     }
   | {
-      type: "GET_USER";
-      payload: User;
-    }
-  | {
       type: "REGISTER_USER";
       payload: User;
     };
@@ -54,11 +50,6 @@ export const reducer = (state: State, action: Action): State => {
           password: action.payload.password,
           token: action.payload.token
         }
-      };
-    case "GET_USER":
-      return {
-        ...state,
-        ...state.user
       };
     case "REGISTER_USER":
       return {

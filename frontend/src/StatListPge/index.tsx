@@ -13,7 +13,7 @@ import { TableBody } from "@mui/material";
 
 
 const StatListPage = () => {
-  const [{ entries }, dispatch] = useStateValue();
+  const [{ entries, user }, dispatch] = useStateValue();
 
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string>();
@@ -29,10 +29,11 @@ const StatListPage = () => {
     try {
       const { data: newEntry } = await axios.post<Entry>(
         `${apiBaseUrl}/br`,
-        values
+        values, { headers: { Authorization: `bearer ${user.token}` },}
       );
       dispatch({ type: "ADD_ENTRY", payload: newEntry });
       closeModal();
+      window.location.reload();
     } catch (e: unknown) {
       if (axios.isAxiosError(e)) {
         console.error(e?.response?.data || "Unrecognized axios error");

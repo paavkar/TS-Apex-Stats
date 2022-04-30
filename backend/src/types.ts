@@ -1,4 +1,4 @@
-import { Document } from 'mongoose';
+import { Document, Schema } from 'mongoose';
 
 export interface battleRoyale extends Document {
   id?: string;
@@ -8,6 +8,10 @@ export interface battleRoyale extends Document {
   kills: number;
   kdr: number;
   avgDamage: number;
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  }
 }
 
 export interface IUser extends Document {

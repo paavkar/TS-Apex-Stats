@@ -10,6 +10,10 @@ const battleRoyaleSchema: mongoose.Schema = new mongoose.Schema<battleRoyale>({
   kills: { type: Number, required: true },
   kdr: { type: Number, required: true },
   avgDamage: { type: Number, required: true },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
 });
 
 battleRoyaleSchema.set('toJSON', {

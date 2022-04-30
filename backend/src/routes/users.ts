@@ -25,7 +25,7 @@ router.post('/', async (req: Request, res: Response) => {
   }
 
   const saltRounds = 10;
-  const passwordHash = await bcrypt.hash(password, saltRounds);
+  const passwordHash = await bcrypt.hash(String(password), saltRounds);
 
   const user = new User({
     username,

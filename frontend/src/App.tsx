@@ -14,11 +14,9 @@ import SignUp from './SignUpPage/SignUp';
 
 
 function App() {
-  const [, dispatch] = useStateValue();
-  let boolRef = useRef<boolean>(null);
+  const [ { user }, dispatch] = useStateValue();
 
 let token = null
-let bool: boolean = true
 
 const setToken = (newToken: string) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -42,28 +40,25 @@ const setToken = (newToken: string) => {
     void fetchEntryList();
   }, [dispatch]);
 
+  
   React.useEffect(() => {
     const fetchUser = () => {
       const loggedUserJSON = window.localStorage.getItem('loggedUser');
       if (loggedUserJSON) {
         const user = JSON.parse(loggedUserJSON);
-        dispatch({ type: "SET_USER", payload: user});
-        console.log(user);
+        dispatch({ type: "SET_USER", payload: user });
         setToken(user.token);
-        bool = false;
-        console.log(bool);
-        return;
       };
-      bool = true;
-      console.log(bool);
     };
     void fetchUser();
   }, [dispatch]);
+  
 
 
   const logout = () => {
     window.localStorage.removeItem('loggedUser');
-    window.location.reload();
+    dispatch({ type: "SET_USER", payload: { id: "", username: "", password: "", token: "" } });
+    token = null;
   }
 
   return (
@@ -74,13 +69,10 @@ const setToken = (newToken: string) => {
           <Typography variant="h3" style={{ marginBottom: "0.5em" }}>
             Apex Stats
           </Typography>
-          {bool ? 
+          {user.username === "" ? 
           <div>
           <Button component={Link} to="/" variant="contained" color="primary">
             Home
-          </Button>
-          <Button component={Link} to="/login" variant="contained" color="primary" style={{ marginLeft: "0.5em" }}>
-            Sign in
           </Button>
           <Button component={Link} to="/register" variant="contained" color="primary" style={{ marginLeft: "0.5em" }}>
             Sign up
@@ -88,14 +80,13 @@ const setToken = (newToken: string) => {
           <Divider hidden />
           <Routes>
             <Route path="/" element={<SignIn />} />
-            <Route path="/login" element={<SignIn />} />
             <Route path="/register" element={<SignUp />} />
           </Routes>
           </div>
              :
           <div>
             <Typography variant="h6" style={{ marginBottom: "0.5em" }}>
-             is logged in
+            {user.username} is logged in
           </Typography>
             <Button component={Link} to="/" variant="contained" color="primary">
             Home

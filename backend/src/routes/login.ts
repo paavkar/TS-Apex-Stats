@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import express from 'express';
 import { Request, Response } from 'express';
-import * as jwt from 'jsonwebtoken';
+import jsonwebtoken from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import "dotenv/config";
 import User from '../models/user';
@@ -32,7 +32,7 @@ router.post('/', async (req: Request, res: Response) => {
     id: user.id
   };
 
-  const token = jwt.sign(
+  const token = jsonwebtoken.sign(
     userForToken,
     String(process.env.SECRET),
     //{ expiresIn: 60*60 }
