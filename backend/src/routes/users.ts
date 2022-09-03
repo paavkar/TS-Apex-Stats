@@ -8,14 +8,20 @@ import bcrypt from 'bcrypt';
 
 const router = express.Router();
 
-
+/*
 router.get('/', async (_req: Request, res: Response) => {
   const users = await User.find({});
   res.json(users);
-});
+});*/
 
 router.post('/', async (req: Request, res: Response) => {
   const { username, password } = req.body;
+
+  if (!password || password.length < 3) {
+    return res.status(400).json({
+      error: 'invalid password'
+    });
+  }
 
   const existingUser = await User.findOne({ username });
   if (existingUser) {

@@ -1,11 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import App from './App';
 import { reducer, StateProvider } from "./state";
 
-ReactDOM.render(
-  <StateProvider reducer={reducer}>
-    <App />
-  </StateProvider>,
-  document.getElementById('root')
-);
+const root = ReactDOM.createRoot(document.getElementById('root') as Element);
+root.render(
+<StateProvider reducer={reducer}>
+  <App />
+</StateProvider>);

@@ -33,7 +33,6 @@ const StatListPage = () => {
       );
       dispatch({ type: "ADD_ENTRY", payload: newEntry });
       closeModal();
-      window.location.reload();
     } catch (e: unknown) {
       if (axios.isAxiosError(e)) {
         console.error(e?.response?.data || "Unrecognized axios error");

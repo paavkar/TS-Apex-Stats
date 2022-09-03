@@ -1,7 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import express from 'express';
 import { Request, Response } from 'express';
 import "dotenv/config";
@@ -13,20 +9,49 @@ import jsonwebtoken from 'jsonwebtoken';
 const router = express.Router();
 
 
-router.get('/', async (_req: Request, res: Response) => {
+router.get('/', async (req: Request, res: Response) => {
   /*
   const brEntries = BattleRoyale.find({});
   {
     res.send(brEntries);
   }*/
   //res.send('Something');
-  const brEntries = await BattleRoyale.find({}).populate('user', { username: 1 });
-  res.status(200).send(brEntries);
+  
+  
+  const token = getTokenFrom(req);
+  let decodedToken: any = null;
+  if(token != null) {
+      decodedToken = jsonwebtoken.verify(String(token), String(process.env.SECRET));
+      if (!token || !decodedToken.id) {
+      return res.status(401).json({ error: 'token missing or invalid' });
+    }
+  }
+  //console.log(token);
+
+  const user = await User.findById(decodedToken?.id);
+  
+  //console.log(user);
+  if(user) {
+    const id = user?.id;
+    console.log(id);
+    const brEntries = await BattleRoyale
+      .find({ user: id })
+      .find({ user: id }).populate('user', { username: 1 });
+    res.status(200).send(brEntries);
+  }
+  
+
+  /*
+  const brEntries = await BattleRoyale
+      .find({})
+      .find({}).populate('user', { username: 1 });
+    res.status(200).send(brEntries);
+    */
 });
 
 
 const getTokenFrom = (request: Request) => {
-  const authorization: any = request.get('Authorization');
+  const authorization = request.get('Authorization');
   if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
     return authorization.substring(7);
   }
@@ -39,7 +64,7 @@ router.post('/', async (req: Request, res: Response) => {
   
   const token = getTokenFrom(req);
   console.log(token);
-  const decodedToken: any = jsonwebtoken.verify(token, String(process.env.SECRET));
+  const decodedToken: any = jsonwebtoken.verify(String(token), String(process.env.SECRET));
   if (!token || !decodedToken.id) {
     return res.status(401).json({ error: 'token missing or invalid' });
   }
@@ -65,8 +90,14 @@ router.post('/', async (req: Request, res: Response) => {
       avgDamage: Number(req.body.avgDamage),
       user: user.id
     });
-    const savedEntry = brEntry.save();
-    res.status(201).send(savedEntry);
+
+    const savedEntry = await brEntry.save();
+
+    const brEntryToReturn = await BattleRoyale 
+      .findById(savedEntry._id)
+      .populate('user', { username: 1 } );
+    
+    res.status(201).send(brEntryToReturn);
     logger.info(`added new BR entry: ${brEntry}`);
   } else {
     res.status(401).json({ error: 'unauthorized' });

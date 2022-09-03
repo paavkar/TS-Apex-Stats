@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import axios from 'axios';
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
 import { Button, Divider, Container } from "@mui/material";
@@ -16,7 +16,8 @@ import SignUp from './SignUpPage/SignUp';
 function App() {
   const [ { user }, dispatch] = useStateValue();
 
-let token = null
+let token: string | null = null;
+
 
 const setToken = (newToken: string) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -24,13 +25,25 @@ const setToken = (newToken: string) => {
  
 };
 
+React.useEffect(() => {
+  const fetchUser = () => {
+    const loggedUserJSON = window.localStorage.getItem('loggedUser');
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON);
+      dispatch({ type: "SET_USER", payload: user });
+      setToken(user.token);
+    };
+  };
+  void fetchUser();
+}, [dispatch]);
+
   React.useEffect(() => {
     void axios.get<void>(`${apiBaseUrl}/ping`);
 
     const fetchEntryList = async () => {
       try {
         const { data: entryListFromApi } = await axios.get<Entry[]>(
-          `${apiBaseUrl}/br`
+          `${apiBaseUrl}/br`, { headers: { Authorization: `${token}` },}
         );
         dispatch({ type: "SET_ENTRY_LIST", payload: entryListFromApi });
       } catch (e) {
@@ -39,21 +52,6 @@ const setToken = (newToken: string) => {
     };
     void fetchEntryList();
   }, [dispatch]);
-
-  
-  React.useEffect(() => {
-    const fetchUser = () => {
-      const loggedUserJSON = window.localStorage.getItem('loggedUser');
-      if (loggedUserJSON) {
-        const user = JSON.parse(loggedUserJSON);
-        dispatch({ type: "SET_USER", payload: user });
-        setToken(user.token);
-      };
-    };
-    void fetchUser();
-  }, [dispatch]);
-  
-
 
   const logout = () => {
     window.localStorage.removeItem('loggedUser');
@@ -67,7 +65,7 @@ const setToken = (newToken: string) => {
       <Router>
         <Container>
           <Typography variant="h3" style={{ marginBottom: "0.5em" }}>
-            Apex Stats
+            Apex Legends Stats
           </Typography>
           {user.username === "" ? 
           <div>

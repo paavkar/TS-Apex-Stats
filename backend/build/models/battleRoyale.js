@@ -13,12 +13,16 @@ const battleRoyaleSchema = new mongoose_1.default.Schema({
     kills: { type: Number, required: true },
     kdr: { type: Number, required: true },
     avgDamage: { type: Number, required: true },
+    user: {
+        type: mongoose_1.default.Schema.Types.ObjectId,
+        ref: 'User'
+    },
 });
 battleRoyaleSchema.set('toJSON', {
     transform: (_document, returnedObject) => {
         returnedObject.id = returnedObject._id.toString();
         delete returnedObject._id;
-        delete returnedObject._v;
+        delete returnedObject.__v;
     }
 });
 const BattleRoyale = mongoose_1.default.model('BattleRoyale', battleRoyaleSchema);

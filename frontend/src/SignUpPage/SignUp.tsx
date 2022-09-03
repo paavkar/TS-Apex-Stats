@@ -3,8 +3,8 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+//import FormControlLabel from '@mui/material/FormControlLabel';
+//import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -34,6 +34,7 @@ const theme = createTheme();
 
 export default function SignUp() {
   const [, dispatch] = useStateValue();
+  const textInput = React.useRef("");
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -44,10 +45,13 @@ export default function SignUp() {
     } catch (e) {
       console.error(e);
     }
+    textInput.current = "";
+    /*
     console.log({
       username: data.get('username'),
       password: data.get('password'),
     });
+    */
   };
 
   return (
@@ -74,6 +78,7 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
+                  inputRef={textInput}
                   id="username"
                   label="Username"
                   name="username"
@@ -84,6 +89,7 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
+                  inputRef={textInput}
                   name="password"
                   label="Password"
                   type="password"

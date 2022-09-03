@@ -15,8 +15,8 @@ const logger = winston_1.default.createLogger({
         // - Write all logs with importance level of `error` or less to `error.log`
         // - Write all logs with importance level of `info` or less to `combined.log`
         //
-        new winston_1.default.transports.File({ filename: 'error.log', level: 'error' }),
-        new winston_1.default.transports.File({ filename: 'combined.log' }),
+        //new winston.transports.File({ filename: 'error.log', level: 'error' }),
+        //new winston.transports.File({ filename: 'combined.log' }),
         new winston_1.default.transports.MongoDB({ db: `${process.env.MONGODB_URI}`, level: 'error', options: {
                 useUnifiedTopology: true,
             } }),

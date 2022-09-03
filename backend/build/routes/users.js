@@ -19,12 +19,18 @@ const user_1 = __importDefault(require("../models/user"));
 const logger_1 = __importDefault(require("../logger"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const router = express_1.default.Router();
-router.get('/', (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const users = yield user_1.default.find({});
-    res.json(users);
-}));
+/*
+router.get('/', async (_req: Request, res: Response) => {
+  const users = await User.find({});
+  res.json(users);
+});*/
 router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, password } = req.body;
+    if (!password || password.length < 3) {
+        return res.status(400).json({
+            error: 'invalid password'
+        });
+    }
     const existingUser = yield user_1.default.findOne({ username });
     if (existingUser) {
         return res.status(400).json({
@@ -32,7 +38,7 @@ router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
     }
     const saltRounds = 10;
-    const passwordHash = yield bcrypt_1.default.hash(password, saltRounds);
+    const passwordHash = yield bcrypt_1.default.hash(String(password), saltRounds);
     const user = new user_1.default({
         username,
         passwordHash
